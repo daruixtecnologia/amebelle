@@ -9,8 +9,10 @@ use Illuminate\Routing\Controller;
 use Carbon\Carbon;
 use Modules\Cliente\Entities\Cliente as Cliente;
 use Modules\Cliente\Transformers\ClienteTransformer;
+use Modules\Cliente\Transformers\SearchClienteTransformer;
 use Spatie\Fractalistic\Fractal;
 use Spatie\Fractalistic\ArraySerializer as Serializer;
+use Illuminate\Support\Facades\DB;
 class ClienteController extends Controller
 {
     /**
@@ -31,13 +33,6 @@ class ClienteController extends Controller
             'slug' => 'response-ok',
             'message' => 'Response ok.',
             'data' => $clienteFormatted
-        ], 200);
-
-
-        return response()->json([
-            'status' => 200,
-            'slug' => 'response-ok',
-            'message' => 'Response ok.'
         ], 200);
     }
 
@@ -104,5 +99,37 @@ class ClienteController extends Controller
      */
     public function destroy()
     {
+    }
+
+    public function getClientsByParams(Request $request){
+        $clientes = DB::table('clientes');
+
+        $procedimento = $request['procedimento'];
+        $dtNascimento = $request['dtNascimento'];
+        $dtRegistro = $request['dtRegistro'];
+
+        if($procedimento){
+            $clientes->where('procedimento', 'LIKE', $procedimento);
+        }
+        if($dtNascimento){
+            $clientes->where('dtNascimento', 'LIKE', $dtNascimento);
+        }
+        if($dtRegistro){
+            $clientes->where('dtRegistro', 'LIKE', $dtRegistro);
+        }
+        $searchResults = $clientes->get();
+
+        $clienteFormatted = Fractal::create()
+            ->collection($searchResults)
+            ->transformWith(SearchClienteTransformer::class)
+            ->serializeWith(new Serializer())
+            ->toArray();
+
+        return response()->json([
+            'status' => 200,
+            'slug' => 'response-ok',
+            'message' => 'Response ok.',
+            'data' => $clienteFormatted
+        ], 200);
     }
 }

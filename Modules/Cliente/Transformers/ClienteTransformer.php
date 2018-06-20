@@ -16,21 +16,17 @@ class ClienteTransformer extends Fractal\TransformerAbstract
      * @return array
      */
     public function transform(Cliente $client){
-//
-//        $dt = Carbon::today('America/Sao_Paulo')->toDateString();
-//        $d = Carbon::createFromFormat('Y-m-d', $dt);
-//        $a = $d->format('d/m/Y');
-
         return [
             'id'           => (int) $client->id,
             'nome'         => $client->nome,
-            'dataRegistro' => $client->dataRegistro,
             'sobrenome'    => $client->sobrenome,
             'idade'        => $client->idade,
-            'telefone'     => $client->telefone,
             'ddd'          => $client->ddd,
+            'telefone'     => $client->telefone,
+            'email'        => $client->email,
             'dtNascimento' => $client->dtNascimento,
-            'email'        => $client->email
+            'procedimento' => $client->procedimento,
+            'dataRegistro' => $client->dataRegistro
         ];
     }
 }

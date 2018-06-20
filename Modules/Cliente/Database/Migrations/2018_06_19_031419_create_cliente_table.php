@@ -17,12 +17,13 @@ class CreateClienteTable extends Migration
             $table->increments('id');
             $table->string('nome');
             $table->string('sobrenome');
-            $table->string('dataRegistro');
             $table->string('idade');
-            $table->string('telefone');
             $table->string('ddd');
-            $table->string('dtNascimento');
+            $table->string('telefone');
             $table->string('email');
+            $table->string('dtNascimento');
+            $table->string('procedimento');
+            $table->string('dataRegistro');
             $table->softDeletes();
             $table->timestamps();
         });

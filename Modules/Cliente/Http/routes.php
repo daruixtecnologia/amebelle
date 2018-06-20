@@ -4,4 +4,5 @@ Route::group(['prefix' => 'v1/cliente', 'namespace' => 'Modules\Cliente\Http\Con
 {
     Route::get('/', 'ClienteController@index');
     Route::post('/addCliente', 'ClienteController@create');
+    Route::get('/clientes', 'ClienteController@getClientsByParams');
 });

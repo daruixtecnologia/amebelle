@@ -7,7 +7,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Cliente extends Model
 {
-    protected $fillable = ['dataRegistro', 'nome', 'sobrenome', 'idade', 'telefone', 'ddd', 'dtNascimento','email', 'updated_at', 'created_at'  ];
+    protected $fillable = [
+        'nome',
+        'sobrenome',
+        'idade',
+        'ddd',
+        'telefone',
+        'email',
+        'dtNascimento',
+        'procedimento',
+        'dataRegistro',
+        'updated_at',
+        'created_at'
+    ];
 
     use SoftDeletes;
     protected $dates = ['deleted_at'];
